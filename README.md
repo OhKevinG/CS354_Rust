@@ -1,1 +1,1 @@
-# cs408_Rust
+# CS354_Rust
