@@ -3,7 +3,17 @@
 /// TODO: Implement each helper function as needed.
 pub mod helpers {
     // TODO: Implement fibonacci()
-    // TODO: Implement factorial()
+    // factorial()
+    /// Calculate factorial of a number iteratively.
+    /// 0! is defined as 1.
+    pub fn factorial(n: u64) -> u64 {
+        if n == 0 {
+            1
+        } else {
+            (1..=n).product()
+        }
+    }
+
     // TODO: Implement prime checking
     // TODO: Implement modulo exponentiation
 }
@@ -29,8 +39,10 @@ mod tests {
 
     #[test]
     fn test_factorial() {
-        // TODO: Replace with real factorial() once implemented
-        // Example: assert_eq!(factorial(5), 120);
+        assert_eq!(factorial(0), 1);     // 0! = 1
+        assert_eq!(factorial(1), 1);     // 1! = 1
+        assert_eq!(factorial(5), 120);   // 5! = 120
+        assert_eq!(factorial(10), 3628800); // 10! = 3628800
     }
 
     #[test]
