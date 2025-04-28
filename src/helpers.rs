@@ -15,11 +15,31 @@ pub mod helpers {
     }
 
     // adds two operators of a generic type
-    pub fn Compute<T: std::ops::Add<Output = T>>(a: T, b: T) -> T{
+    pub fn compute<T: std::ops::Add<Output = T>>(a: T, b: T) -> T{
         a + b
     }
 
-    // TODO: Implement prime checking
+    // divides two operators of a generic type
+    pub fn divide<T: std::ops::Div<Output = T>>(a: T, b: T) -> T{
+        a / b
+    }
+
+    // multiplies two operators of a generic type
+    pub fn multiply<T: std::ops::Mul<Output = T>>(a: T, b: T) -> T{
+        a * b
+    }
+
+    // determines if unsigned integer is a prime number 
+    pub fn prime_check( n: u32 ) -> bool{
+        for i in 2..((n/2)+1) {
+            // Uses iterator " 2..((n/2)+1) " which gets all values between 2 and half of n + 1
+            if i * (n/i) == n {
+                return false;
+            }
+        }
+        true
+    }
+
     // TODO: Implement modulo exponentiation
 }
 

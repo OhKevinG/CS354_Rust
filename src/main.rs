@@ -6,6 +6,9 @@ struct Inputs<T> {
     a: T,
     b: T,
 }
+// For Creating Struct and passing variables, use following format:
+//   - let x = Pair{a: 10, b: 20};
+//   - let result = compute(x.a, x.b);
 
 fn main() {
     // TODO: Initialize CLI handler
