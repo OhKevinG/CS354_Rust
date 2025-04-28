@@ -14,9 +14,16 @@ pub mod helpers {
         }
     }
 
+    // adds two operators of a generic type
+    pub fn Compute<T: std::ops::Add<Output = T>>(a: T, b: T) -> T{
+        a + b
+    }
+
     // TODO: Implement prime checking
     // TODO: Implement modulo exponentiation
 }
+
+
 
 /// Unit tests for helper functions.
 /// 

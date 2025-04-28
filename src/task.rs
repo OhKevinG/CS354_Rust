@@ -17,17 +17,17 @@ pub trait Task {
 #[derive(Clone)]
 pub enum TaskType {
     
-    /// Simple addition of two integers.
-    Compute { a: i32, b: i32 },
+    /// Simple addition of two operators of a generic type.
+    Compute { a: T, b: T },
 
     /// Calculate the nth Fibonacci number.
     Fibonacci { n: u32 },
 
     /// Divide numerator by denominator.
-    Divide { numerator: i32, denominator: i32 },
+    Divide { numerator: T, denominator: T },
 
     /// Multiply two integers together.
-    Multiply { a: i32, b: i32 },
+    Multiply { a: T, b: T },
 
     /// Compute factorial of a number.
     Factorial { n: u32 },
