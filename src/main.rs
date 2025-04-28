@@ -10,6 +10,12 @@ struct Inputs<T> {
 //   - let x = Pair{a: 10, b: 20};
 //   - let result = compute(x.a, x.b);
 
+struct Modulo {
+    base: u64,
+    exponent: u64, 
+    modulus: u64,
+}
+
 fn main() {
     // TODO: Initialize CLI handler
     // TODO: Generate tasks
