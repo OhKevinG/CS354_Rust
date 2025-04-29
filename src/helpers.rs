@@ -3,7 +3,22 @@
 /// TODO: Implement each helper function as needed.
 pub mod helpers {
 
-    // TODO: Implement fibonacci()
+    /// Calculate fibonnaci sequence recursively
+    pub fn fibonacci(n: u64) -> u64 {
+        if n <= 0 {
+            0
+        } else {
+            fib(n, 0, 1)
+        }
+    }
+    
+    pub fn fib(n: u64, p: u64, c: u64) -> u64 {
+        if n <= 0 {
+            c
+        } else {
+            fib(n-1, c, p + c)
+        }
+    }
     
     // factorial()
     /// Calculate factorial of a number iteratively.
@@ -83,8 +98,16 @@ mod tests {
 
     #[test]
     fn test_fibonacci() {
-        // TODO: Replace with real fibonacci() once implemented
-        // Example: assert_eq!(fibonacci(5), 8);
+        assert_eq!(fibonacci(0), 0);
+        assert_eq!(fibonacci(1), 1);
+        assert_eq!(fibonacci(2), 2);
+        assert_eq!(fibonacci(3), 3);
+        assert_eq!(fibonacci(4), 5);
+        assert_eq!(fibonacci(5), 8);
+        assert_eq!(fibonacci(6), 13);
+        assert_eq!(fibonacci(7), 21);
+        assert_eq!(fibonacci(15), 987);
+        assert_eq!(fibonacci(30), 1346269);
     }
 
     #[test]
