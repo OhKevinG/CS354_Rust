@@ -2,10 +2,11 @@
 /// 
 /// TODO: Implement each helper function as needed.
 pub mod helpers {
+
     // TODO: Implement fibonacci()
+    
     // factorial()
     /// Calculate factorial of a number iteratively.
-    /// 0! is defined as 1.
     pub fn factorial(n: u64) -> u64 {
         if n == 0 {
             1
@@ -40,7 +41,29 @@ pub mod helpers {
         true
     }
 
-    // TODO: Implement modulo exponentiation
+    // Modulo exponentiation
+    pub fn mod_exp(mut base: u64, mut exp: u64, modulus: u64) -> u64 {
+        // Special case: anything mod 1 is 0
+        if modulus == 1 {
+            return 0;
+        }
+        // Initialize result as 1
+        let mut result = 1;    
+        // Ensure base is reduced to avoid unnecessary large numbers
+        base %= modulus;
+        // Loop while there are still bits in the exponent
+        while exp > 0 {
+            // If the current bit of exp is 1, multiply result by current base
+            if exp % 2 == 1 {
+                result = (result * base) % modulus;
+            }
+            // Shift exp right by 1 bit (divide by 2)
+            exp /= 2;
+            // Square the base for next iteration
+            base = (base * base) % modulus;
+        }
+        result
+    }
 }
 
 
@@ -80,7 +103,10 @@ mod tests {
 
     #[test]
     fn test_modulo_exponentiation() {
-        // TODO: Replace with real mod_exp() once implemented
-        // Example: assert_eq!(mod_exp(2, 3, 5), 3);
+    // Basic cases
+        assert_eq!(mod_exp(2, 3, 5), 3);     // 2^3 = 8, 8 % 5 = 3
+        assert_eq!(mod_exp(5, 0, 7), 1);     // 5^0 = 1, 1 % 7 = 1
+        assert_eq!(mod_exp(7, 4, 9), 4);     // 7^4 = 2401, 2401 % 9 = 4
+        assert_eq!(mod_exp(10, 5, 13), 4);   // 10^5 = 100000, 100000 % 13 = 4
     }
 }
