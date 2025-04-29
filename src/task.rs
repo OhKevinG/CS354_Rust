@@ -100,3 +100,70 @@ impl Task for TaskType {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_compute_task() {
+        let task = TaskType::Compute { a: 3, b: 4 };
+        assert_eq!(task.run(), Ok(()));
+    }
+
+    #[test]
+    fn test_fibonacci_task() {
+        let task = TaskType::Fibonacci { n: 7 };
+        assert_eq!(task.run(), Ok(())); // Fibonacci(7) = 21
+    }
+
+    #[test]
+    fn test_divide_task_valid() {
+        let task = TaskType::Divide { numerator: 10, denominator: 2 };
+        assert_eq!(task.run(), Ok(()));
+    }
+
+    #[test]
+    fn test_divide_task_by_zero() {
+        let task = TaskType::Divide { numerator: 10, denominator: 0 };
+        assert_eq!(task.run(), Err("Division by zero.".to_string()));
+    }
+
+    #[test]
+    fn test_multiply_task() {
+        let task = TaskType::Multiply { a: 6, b: 7 };
+        assert_eq!(task.run(), Ok(()));
+    }
+
+    #[test]
+    fn test_factorial_task() {
+        let task = TaskType::Factorial { n: 5 };
+        assert_eq!(task.run(), Ok(())); // 5! = 120
+    }
+
+    #[test]
+    fn test_prime_check_task_prime() {
+        let task = TaskType::PrimeCheck { n: 7 };
+        assert_eq!(task.run(), Ok(()));
+    }
+
+    #[test]
+    fn test_modulo_exponentiation_task_valid() {
+        let task = TaskType::ModuloExponentiation {
+            base: 3,
+            exponent: 4,
+            modulus: 5,
+        };
+        assert_eq!(task.run(), Ok(())); // 3^4 % 5 = 81 % 5 = 1
+    }
+
+    #[test]
+    fn test_modulo_exponentiation_task_zero_modulus() {
+        let task = TaskType::ModuloExponentiation {
+            base: 2,
+            exponent: 3,
+            modulus: 0,
+        };
+        assert_eq!(task.run(), Err("Modulus cannot be zero.".to_string()));
+    }
+}
