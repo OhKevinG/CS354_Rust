@@ -1,3 +1,5 @@
+use crate::helpers;
+
 /// A trait representing a unit of work that can be executed.
 ///
 /// All task types (such as Compute, Fibonacci, etc.) must implement this trait.
@@ -48,7 +50,53 @@ impl Task for TaskType {
     /// Executes the task and returns success or an error message.
     fn run(&self) -> Result<(), String> {
         match self {
-            // TODO: Match arms calling appropriate helpers
+            TaskType::Compute { a, b } => {
+                let result = helpers::compute::<i32>(*a, *b);
+                println!("Computed {} + {} = {}", a, b, result);
+                Ok(())
+            }
+
+            TaskType::Fibonacci { n } => {
+                let result = helpers::fibonacci(*n as u64);
+                println!("Fibonacci({}) = {}", n, result);
+                Ok(())
+            }
+
+            TaskType::Divide { numerator, denominator } => {
+                if *denominator == 0 {
+                    return Err("Division by zero.".to_string());
+                }
+                let result = helpers::divide::<i32>(*numerator, *denominator);
+                println!("Division: {} / {} = {}", numerator, denominator, result);
+                Ok(())
+            }
+
+            TaskType::Multiply { a, b } => {
+                let result = helpers::multiply::<i32>(*a, *b);
+                println!("Multiplication: {} * {} = {}", a, b, result);
+                Ok(())
+            }
+
+            TaskType::Factorial { n } => {
+                let result = helpers::factorial(*n as u64);
+                println!("Factorial({}) = {}", n, result);
+                Ok(())
+            }
+
+            TaskType::PrimeCheck { n } => {
+                let result = helpers::prime_check(*n);
+                println!("{} is {}", n, if result { "prime" } else { "not prime" });
+                Ok(())
+            }
+
+            TaskType::ModuloExponentiation { base, exponent, modulus } => {
+                if *modulus == 0 {
+                    return Err("Modulus cannot be zero.".to_string());
+                }
+                let result = helpers::mod_exp(*base, *exponent, *modulus);
+                println!("ModExp: {}^{} % {} = {}", base, exponent, modulus, result);
+                Ok(())
+            }
         }
     }
 }
