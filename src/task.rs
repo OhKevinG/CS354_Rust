@@ -18,16 +18,16 @@ pub trait Task {
 pub enum TaskType {
     
     /// Simple addition of two operators of a generic type.
-    Compute { a: T, b: T },
+    Compute { a: i32, b: i32 },
 
     /// Calculate the nth Fibonacci number.
     Fibonacci { n: u32 },
 
     /// Divide numerator by denominator.
-    Divide { numerator: T, denominator: T },
+    Divide { numerator: i32, denominator: i32 },
 
     /// Multiply two integers together.
-    Multiply { a: T, b: T },
+    Multiply { a: i32, b: i32 },
 
     /// Compute factorial of a number.
     Factorial { n: u32 },
