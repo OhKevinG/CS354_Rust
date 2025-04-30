@@ -1,3 +1,6 @@
+use rand::Rng;
+use crate::task::TaskType;
+
 mod task;
 mod helpers;
 
@@ -47,7 +50,53 @@ fn main() {
 
 }
 
-// TODO: Generate tasks
-    // TODO: Execute tasks serially
-    // TODO: Execute tasks concurrently
-    // TODO: Compare execution times
+/// Generates a vector of random tasks based on the specified batch size.
+pub fn generate_tasks(batch_size: u32) -> Vec<TaskType> {
+    let mut rng = rand::thread_rng();
+    let mut tasks = Vec::new();
+
+    for _ in 0..batch_size {
+        let task_type = rng.gen_range(0..7);
+
+        let task = match task_type {
+            0 => TaskType::Compute {
+                a: rng.gen_range(1..100),
+                b: rng.gen_range(1..100),
+            },
+            1 => TaskType::Fibonacci {
+                n: rng.gen_range(1..30),
+            },
+            2 => TaskType::Divide {
+                numerator: rng.gen_range(1..100),
+                denominator: rng.gen_range(1..99) + 1, // avoid zero
+            },
+            3 => TaskType::Multiply {
+                a: rng.gen_range(1..100),
+                b: rng.gen_range(1..100),
+            },
+            4 => TaskType::Factorial {
+                n: rng.gen_range(0..20),
+            },
+            5 => TaskType::PrimeCheck {
+                n: rng.gen_range(1..100),
+            },
+            6 => TaskType::ModuloExponentiation {
+                base: rng.gen_range(2..20),
+                exponent: rng.gen_range(2..10),
+                modulus: rng.gen_range(1..50) + 1, // avoid zero
+            },
+            _ => unreachable!(),
+        };
+
+        tasks.push(task);
+    }
+
+    tasks
+}
+
+
+
+
+// TODO: Execute tasks serially
+// TODO: Execute tasks concurrently
+// TODO: Compare execution times
