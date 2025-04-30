@@ -1,5 +1,7 @@
 use rand::Rng;
 use crate::task::TaskType;
+use crate::task::Task;
+use std::time::Instant;
 
 mod task;
 mod helpers;
@@ -36,11 +38,10 @@ fn main() {
     println!("Generating {} tasks...", batch_size);
     println!("Using {} threads for concurrent execution.", thread_count);
 
-     // TODO: Generate tasks and store in a Vec<TaskType>
-    // let tasks = generate_tasks(batch_size);
+    let tasks = generate_tasks(batch_size);
 
     // TODO: Execute tasks serially and log time
-    // let serial_duration = execute_serially(&tasks);
+    let serial_duration = execute_serially(&tasks);
 
     // TODO: Execute tasks concurrently using thread_count and log time
     // let concurrent_duration = execute_concurrently(&tasks, thread_count);
@@ -94,9 +95,16 @@ pub fn generate_tasks(batch_size: u32) -> Vec<TaskType> {
     tasks
 }
 
+/// Executes the list of tasks one by one and returns the total elapsed time.
+fn execute_serially(tasks: &Vec<TaskType>) -> std::time::Duration {
+    let start = Instant::now();
+    for task in tasks {
+        if let Err(e) = task.run() {
+            eprintln!("Task failed: {}", e);
+        }
+    }
+    start.elapsed()
+}
 
-
-
-// TODO: Execute tasks serially
 // TODO: Execute tasks concurrently
 // TODO: Compare execution times
