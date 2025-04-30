@@ -52,13 +52,13 @@ impl Task for TaskType {
         match self {
             TaskType::Compute { a, b } => {
                 let result = helpers::compute::<i32>(*a, *b);
-                println!("Computed {} + {} = {}", a, b, result);
+                // println!("Computed {} + {} = {}", a, b, result);
                 Ok(())
             }
 
             TaskType::Fibonacci { n } => {
                 let result = helpers::fibonacci(*n as u64);
-                println!("Fibonacci({}) = {}", n, result);
+                // println!("Fibonacci({}) = {}", n, result);
                 Ok(())
             }
 
@@ -67,25 +67,25 @@ impl Task for TaskType {
                     return Err("Division by zero.".to_string());
                 }
                 let result = helpers::divide::<i32>(*numerator, *denominator);
-                println!("Division: {} / {} = {}", numerator, denominator, result);
+                // println!("Division: {} / {} = {}", numerator, denominator, result);
                 Ok(())
             }
 
             TaskType::Multiply { a, b } => {
                 let result = helpers::multiply::<i32>(*a, *b);
-                println!("Multiplication: {} * {} = {}", a, b, result);
+                // println!("Multiplication: {} * {} = {}", a, b, result);
                 Ok(())
             }
 
             TaskType::Factorial { n } => {
                 let result = helpers::factorial(*n as u64);
-                println!("Factorial({}) = {}", n, result);
+                // println!("Factorial({}) = {}", n, result);
                 Ok(())
             }
 
             TaskType::PrimeCheck { n } => {
                 let result = helpers::prime_check(*n);
-                println!("{} is {}", n, if result { "prime" } else { "not prime" });
+                // println!("{} is {}", n, if result { "prime" } else { "not prime" });
                 Ok(())
             }
 
@@ -94,7 +94,7 @@ impl Task for TaskType {
                     return Err("Modulus cannot be zero.".to_string());
                 }
                 let result = helpers::mod_exp(*base, *exponent, *modulus);
-                println!("ModExp: {}^{} % {} = {}", base, exponent, modulus, result);
+                // println!("ModExp: {}^{} % {} = {}", base, exponent, modulus, result);
                 Ok(())
             }
         }

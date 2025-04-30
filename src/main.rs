@@ -21,7 +21,7 @@ fn prompt_for_u32(prompt: &str) -> u32 {
 
 
 struct Inputs<T> {
-    // varaibles a and b used for compute, multiply and divide
+    // variables a and b used for compute, multiply and divide
     a: T,
     b: T,
 }
@@ -50,8 +50,7 @@ fn main() {
     println!("\n--- Running tasks concurrently ---");
     let concurrent_duration = execute_concurrently(&tasks, thread_count);
 
-    // TODO: Compare execution times and print summary
-    // compare_durations(serial_duration, concurrent_duration);
+    compare_durations(serial_duration, concurrent_duration);
 
 }
 
@@ -155,4 +154,19 @@ pub fn execute_concurrently(tasks: &[TaskType], thread_count: u32) -> Duration {
     Instant::now() - start_time
 }
 
-// TODO: Compare execution times
+/// Compares and prints the execution times for serial and concurrent runs.
+fn compare_durations(serial: Duration, concurrent: Duration) {
+    println!("\n=== Execution Time Summary ===");
+    println!("Serial execution took:     {:.2?}", serial);
+    println!("Concurrent execution took: {:.2?}", concurrent);
+
+    if serial > concurrent {
+        let speedup = serial.as_secs_f64() / concurrent.as_secs_f64();
+        println!("✅ Concurrent execution was {:.2}× faster.", speedup);
+    } else if concurrent > serial {
+        let slowdown = concurrent.as_secs_f64() / serial.as_secs_f64();
+        println!("⚠️  Serial execution was {:.2}× faster.", slowdown);
+    } else {
+        println!("⏱️  Execution times were equal.");
+    }
+}
