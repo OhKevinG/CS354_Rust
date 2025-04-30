@@ -1,7 +1,11 @@
 use rand::Rng;
 use crate::task::TaskType;
 use crate::task::Task;
-use std::time::Instant;
+use std::time::{Instant, Duration};
+
+use std::sync::{Arc, Mutex};
+use std::collections::VecDeque;
+use std::thread;
 
 mod task;
 mod helpers;
@@ -40,11 +44,11 @@ fn main() {
 
     let tasks = generate_tasks(batch_size);
 
-    // TODO: Execute tasks serially and log time
+    println!("\n--- Running tasks serially ---");
     let serial_duration = execute_serially(&tasks);
 
-    // TODO: Execute tasks concurrently using thread_count and log time
-    // let concurrent_duration = execute_concurrently(&tasks, thread_count);
+    println!("\n--- Running tasks concurrently ---");
+    let concurrent_duration = execute_concurrently(&tasks, thread_count);
 
     // TODO: Compare execution times and print summary
     // compare_durations(serial_duration, concurrent_duration);
@@ -106,5 +110,49 @@ fn execute_serially(tasks: &Vec<TaskType>) -> std::time::Duration {
     start.elapsed()
 }
 
-// TODO: Execute tasks concurrently
+/// Executes a list of tasks concurrently using a specified number of threads.
+///
+/// # Arguments
+/// * `tasks` - A reference to the list of tasks to execute.
+/// * `thread_count` - The number of worker threads to spawn.
+///
+/// # Returns
+/// * `Duration` - The total time taken to execute all tasks.
+pub fn execute_concurrently(tasks: &[TaskType], thread_count: u32) -> Duration {
+    let queue = Arc::new(Mutex::new(VecDeque::from(tasks.to_vec())));
+    let mut handles = Vec::new();
+
+    let start_time = Instant::now();
+
+    for _ in 0..thread_count {
+        let task_queue = Arc::clone(&queue);
+
+        let handle = thread::spawn(move || {
+            loop {
+                let maybe_task = {
+                    let mut queue_guard = task_queue.lock().unwrap();
+                    queue_guard.pop_front()
+                };
+
+                match maybe_task {
+                    Some(task) => {
+                        if let Err(e) = task.run() {
+                            eprintln!("Error executing task: {}", e);
+                        }
+                    },
+                    None => break, // Queue is empty, exit thread
+                }
+            }
+        });
+
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().expect("Thread panicked during execution");
+    }
+
+    Instant::now() - start_time
+}
+
 // TODO: Compare execution times
